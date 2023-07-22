@@ -16,7 +16,19 @@ services:
     build: api/
     depends_on:
       - db
-      #   - front
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./api:/api
+
+  front:
+    build: front/
+    depends_on:
+      - api
+    command: npm run dev
+    volumes:
+      - ./front:/front
 
 volumes:
   weight_graph_db:
