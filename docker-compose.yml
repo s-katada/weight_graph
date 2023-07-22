@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 services:
   db:
@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: weight_graph
       POSTGRES_USER: postgres
-      POSRGRES_PASSWORD: password
+      POSTGRES_PASSWORD: password
     ports:
       - '5432:5432'
     volumes:
@@ -30,9 +30,11 @@ services:
       dockerfile: Dockerfile.front
     depends_on:
       - api
-    command: npm run dev
+    command: bash -c "npm run dev"
     volumes:
       - ./front:/front
+    ports:
+      - '8080:3000'
 
 volumes:
   weight_graph_db:
