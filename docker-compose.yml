@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: weight_graph
+      POSTGRES_USER: postgres
+      POSRGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+    volumes:
+      - weight_graph_db:/var/lib/postgresql/data
+
+  api:
+    build: api/
+    depends_on:
+      - db
+      #   - front
+
+volumes:
+  weight_graph_db:
