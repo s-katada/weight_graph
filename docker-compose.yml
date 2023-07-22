@@ -13,7 +13,9 @@ services:
       - weight_graph_db:/var/lib/postgresql/data
 
   api:
-    build: api/
+    build:
+      context: .
+      dockerfile: Dockerfile.api
     depends_on:
       - db
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
@@ -23,7 +25,9 @@ services:
       - ./api:/api
 
   front:
-    build: front/
+    build:
+      context: .
+      dockerfile: Dockerfile.front
     depends_on:
       - api
     command: npm run dev

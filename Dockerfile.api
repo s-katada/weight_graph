@@ -5,6 +5,6 @@ FROM ruby:3.2.0
 
 WORKDIR /api
 
-COPY . .
+COPY ./api .
 
 RUN bundle install
