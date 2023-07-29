@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+20.times do |i|
+  WeightLog.create(weight: 80.0 - i, date: Date.new(2023, 7, i + 1))
+end
