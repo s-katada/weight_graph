@@ -3,6 +3,7 @@ class CreateWeightLogs < ActiveRecord::Migration[7.0]
     create_table :weight_logs do |t|
       t.float :weight, null: false, default: 0.0
       t.datetime :date, null: false, default: -> { 'CURRENT_TIMESTAMP' }
+      t.index [:date], unique: true
 
       t.timestamps
     end
