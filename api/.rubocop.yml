@@ -3,7 +3,6 @@ require:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.2
   Exclude:
     - db/schema.rb
     - bin/*
@@ -11,6 +10,7 @@ AllCops:
     - config/environments/*
     - config/initializers/*
     - spec/rails_helper.rb
+    - test/**/*
 
 Style/Documentation:
   Enabled: false
