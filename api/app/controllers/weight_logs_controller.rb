@@ -1,3 +1,4 @@
+# 体重記録のコントローラー
 class WeightLogsController < ApplicationController
   def index
     weight_logs = WeightLog.all

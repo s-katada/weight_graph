@@ -1,0 +1,19 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+  Exclude:
+    - db/schema.rb
+    - bin/*
+    - vendor/**/*
+    - config/environments/*
+    - config/initializers/*
+    - spec/rails_helper.rb
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
