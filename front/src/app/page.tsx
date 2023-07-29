@@ -6,7 +6,9 @@ import { Content } from 'antd/es/layout/layout';
 export default function Home() {
   return (
     <Layout>
-      <Content>Content</Content>
+      <Content>
+        <h1>Home</h1>
+      </Content>
     </Layout>
   )
 }
