@@ -1,11 +1,8 @@
 #!/usr/bin/env ruby
-require 'bundler'
-Bundler.require
-require 'active_support'
-require 'active_support/core_ext'
 require 'google/apis/calendar_v3'
 require 'googleauth'
 require 'dotenv/load'
+require_relative '../config/environment'
 
 # 認証フェーズ
 scopes = [Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY]
@@ -23,7 +20,6 @@ calendar_api = Calendar::CalendarService.new
 calendar_api.authorization = credentials
 calendar_api.key = ENV['API_KEY']
 
-
 # イベントの取得
 begin
   response = calendar_api.list_events(ENV['CALENDAR_ID'],
@@ -37,8 +33,7 @@ begin
     start = event.start.date_time || event.start.date
     { date: start.to_date, weight: event.summary }
   end.compact
-  binding.irb
-  puts events
+  events.each { |event| WeightLog.create(event) }
 rescue Google::Apis::AuthorizationError
   puts 'Authorization Error: Please check your credentials.'
 rescue StandardError => e
