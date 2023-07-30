@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'google/apis/calendar_v3'
 require 'googleauth'
+require 'dotenv/load'
 
 # 認証フェーズ
 scopes = [Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY]
@@ -18,15 +19,16 @@ puts credentials
 Calendar = Google::Apis::CalendarV3
 calendar_api = Calendar::CalendarService.new
 calendar_api.authorization = credentials
+calendar_api.key = ENV['API_KEY']
+
 
 # イベントの取得
 begin
-  response = calendar_api.list_events('primary', max_results: 10,
-                                            single_events: true,
-                                            order_by: 'startTime',
-                                            time_min: Time.now.iso8601)
-  puts response
-  puts 'Upcoming events:'
+  response = calendar_api.list_events(ENV['CALENDAR_ID'],
+                                      single_events: true,
+                                      order_by: 'startTime',
+                                      time_min: Time.new(2023, 5, 1).iso8601,
+                                      time_max: Time.new(2023, 7, 31).iso8601)
   events = response.items
   events.each do |event|
     start = event.start.date_time || event.start.date
