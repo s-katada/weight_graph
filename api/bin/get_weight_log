@@ -25,7 +25,7 @@ begin
   response = calendar_api.list_events(ENV['CALENDAR_ID'],
                                       single_events: true,
                                       order_by: 'startTime',
-                                      time_min: Time.new(2023, 4, 1).iso8601,
+                                      time_min: Time.new(2023, 7, 1).iso8601,
                                       time_max: Time.new(2023, 7, 31).iso8601)
 
   events = response.items.map do |event|
