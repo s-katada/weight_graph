@@ -162,6 +162,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.3)
+    pluginator (1.5.0)
+    pre-commit (0.39.0)
+      pluginator (~> 1.5)
     public_suffix (5.0.3)
     puma (5.6.6)
       nio4r (~> 2.0)
@@ -265,6 +268,7 @@ DEPENDENCIES
   dotenv-rails
   google-api-client
   pg (~> 1.2)
+  pre-commit
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.6)

@@ -20,13 +20,22 @@ calendar_api = Calendar::CalendarService.new
 calendar_api.authorization = credentials
 calendar_api.key = ENV['API_KEY']
 
+def usage
+  puts <<~USAGE
+    Usage: ruby get_weight_log.rb
+    bin/weight_graph from(yyyy-mm-dd) to(yyyy-mm-dd)
+  USAGE
+end
+
 # イベントの取得
 begin
+  from = Time.new(ARGV[0]).iso8601
+  to = Time.new(ARGV[1]).iso8601
   response = calendar_api.list_events(ENV['CALENDAR_ID'],
                                       single_events: true,
                                       order_by: 'startTime',
-                                      time_min: Time.new(2023, 7, 1).iso8601,
-                                      time_max: Time.new(2023, 7, 31).iso8601)
+                                      time_min: from,
+                                      time_max: to)
 
   events = response.items.map do |event|
     next unless /^\d+\.\d+$/.match?(event.summary)
@@ -34,8 +43,9 @@ begin
     { date: start.to_date, weight: event.summary }
   end.compact
   events.each { |event| WeightLog.create(event) }
+  puts 'Success!'
 rescue Google::Apis::AuthorizationError
   puts 'Authorization Error: Please check your credentials.'
 rescue StandardError => e
-  puts "Error fetching events: #{e.message}"
+  usage
 end
