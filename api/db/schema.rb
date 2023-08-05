@@ -21,5 +21,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_072704) do
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_weight_logs_on_date", unique: true
   end
-
 end
