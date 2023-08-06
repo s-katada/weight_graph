@@ -5,6 +5,7 @@ import axios from 'axios';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 interface Parameter {
   email: string;
@@ -22,10 +23,10 @@ function authentication(parameter: Parameter, setLoading: React.Dispatch<React.S
   };
 
   axios.post(baseUrl + '/auth/sign_in', requestData)
-    .then((response) => {
-      localStorage.setItem('access-token', response.headers['access-token']);
-      localStorage.setItem('client', response.headers['client']);
-      localStorage.setItem('uid', response.headers['uid']);
+     .then((response) => {
+      Cookies.set('access-token', response.headers['access-token']);
+      Cookies.set('client', response.headers['client']);
+      Cookies.set('uid', response.headers['uid']);
       alert('ログインしました!');
       setLoading(false);
       router.push('/');

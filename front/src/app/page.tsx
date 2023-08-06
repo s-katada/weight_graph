@@ -13,6 +13,10 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import { Row } from 'antd';
 
 interface WeightLog {
   weight: number;
@@ -39,31 +43,27 @@ export const options = {
     },
     title: {
       display: true,
-      text: '体重グラフ',
+      text: '',
     },
   },
 };
 
-async function getWeightLog() {
-  const client = localStorage.getItem('client')
-  const uid = localStorage.getItem('uid')
-  const accessToken = localStorage.getItem('access-token')
-  const headers = {
-    'access-token': accessToken,
-    client: client,
-    uid: uid,
-  }
+async function getWeightLog(headers: {}, router: AppRouterInstance) {
   return axios
     .get(`${baseUrl}/weight_logs`, { headers })
     .then((response: AxiosResponse<WeightLog[]>) => {
       return response.data;
     })
     .catch((_error) => {
+      console.log(_error);
+      window.alert('ログインしてください');
+      router.push('/signin');
       return [] as WeightLog[];
     });
 }
 
 export default function Graph() {
+  const router = useRouter();
   const [weightLog, setWeightLog] = useState<WeightLog[]>([]);
   const labels = weightLog.map((log) => log.date);
   const data = {
@@ -77,13 +77,25 @@ export default function Graph() {
       }
     ],
   }
-  console.log(localStorage.getItem('client'))
   useEffect(() => {
     (async () => {
-      setWeightLog(await getWeightLog());
+      const client = Cookies.get('client');
+      const uid = Cookies.get('uid');
+      const accessToken = Cookies.get('access-token');
+      const headers = {
+        'access-token': accessToken,
+        client: client,
+        uid: uid,
+      };
+      setWeightLog(await getWeightLog(headers, router));
     })();
   }, []);
   return (
-    <Line options={options} data={data} />
+    <>
+      <Row justify="center">
+        <h1>体重グラフ</h1>
+      </Row>
+      <Line options={options} data={data} />
+    </>
   )
 }
