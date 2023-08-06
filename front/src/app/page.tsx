@@ -1,7 +1,5 @@
 'use client';
 
-import { Layout } from 'antd';
-import { Content } from 'antd/es/layout/layout';
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 import {
@@ -47,8 +45,16 @@ export const options = {
 };
 
 async function getWeightLog() {
+  const client = localStorage.getItem('client')
+  const uid = localStorage.getItem('uid')
+  const accessToken = localStorage.getItem('access-token')
+  const headers = {
+    'access-token': accessToken,
+    client: client,
+    uid: uid,
+  }
   return axios
-    .get(`${baseUrl}/weight_logs`)
+    .get(`${baseUrl}/weight_logs`, { headers })
     .then((response: AxiosResponse<WeightLog[]>) => {
       return response.data;
     })
@@ -71,16 +77,13 @@ export default function Graph() {
       }
     ],
   }
+  console.log(localStorage.getItem('client'))
   useEffect(() => {
     (async () => {
       setWeightLog(await getWeightLog());
     })();
   }, []);
   return (
-    <Layout>
-      <Content>
-        <Line options={options} data={data} />
-      </Content>
-    </Layout>
+    <Line options={options} data={data} />
   )
 }
