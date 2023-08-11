@@ -39,6 +39,7 @@ export default function Register() {
             >
               <ConfigProvider locale={locale}>
                 <DatePicker
+                  style={{ width: '50vh'}}
                   format='YYYY-MM-DD'
                   onChange={value => {
                     if (null === value) {

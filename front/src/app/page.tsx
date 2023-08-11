@@ -16,7 +16,7 @@ import { Line } from 'react-chartjs-2';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
-import { Row } from 'antd';
+import { Button, Col, Row, Space, Typography } from 'antd';
 
 interface WeightLog {
   weight: number;
@@ -92,8 +92,10 @@ export default function Graph() {
   }, []);
   return (
     <>
-      <Row justify="center">
-        <h1>体重グラフ</h1>
+      <Row>
+        <Col span={24}>
+          <Typography.Title style={{textAlign: 'center'}}>体重グラフ</Typography.Title>
+        </Col>
       </Row>
       <Line options={options} data={data} />
     </>
