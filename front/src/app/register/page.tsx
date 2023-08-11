@@ -3,8 +3,8 @@
 import { Button, ConfigProvider, DatePicker, Form, Input, Row, Spin } from 'antd';
 import 'dayjs/locale/ja';
 import locale from 'antd/locale/ja_JP';
-
-import React from 'react';
+import React, { useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 interface Parameter {
   date: string;
@@ -19,7 +19,13 @@ const initParameter = {
 export default function Register() {
   const [loading, setLoading] = React.useState(false);
   const [parameters, setParameters] = React.useState<Parameter>(initParameter);
-  console.log(parameters)
+  console.log(parameters);
+
+  useEffect(() => {
+    const client = Cookies.get('client');
+    const uid = Cookies.get('uid');
+    const accessToken = Cookies.get('access-token');
+  }, []);
   return (
     <>
       <Spin spinning={loading} >
@@ -67,6 +73,7 @@ export default function Register() {
                     weight: Number(value),
                   });
                 }}
+                placeholder='体重を入力'
               />
             </Form.Item>
             <Row justify='center'>

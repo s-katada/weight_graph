@@ -46,7 +46,7 @@ export default function SignIn() {
         <Row justify="center">
           <Col>
             <Space direction="vertical">
-              <h1>Sign In</h1>
+              <h1>ログイン</h1>
             </Space>
           </Col>
         </Row>
@@ -58,13 +58,13 @@ export default function SignIn() {
               authentication(e, setLoading, router);
             }}>
             <Form.Item
-              label="Email"
+              label="Eメールアドレス"
               name={'email'}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              label="Password"
+              label="パスワード"
               name={'password'}
             >
               <Input />

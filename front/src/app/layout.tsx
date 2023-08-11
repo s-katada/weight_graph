@@ -5,7 +5,7 @@ import { Menu, MenuProps } from 'antd';
 const items: MenuProps['items'] = [
   {
     label: (
-      <a href='/'>Home</a>
+      <a href='/'>グラフ</a>
     ),
     key: 'home',
   },
